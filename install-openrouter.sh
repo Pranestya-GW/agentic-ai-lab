@@ -11,6 +11,8 @@ YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 NC='\033[0m'
 
+# ── Prerequisite checks ──────────────────────────────────────────────
+
 if [ -z "$OPENROUTER_API_KEY" ]; then
     echo -e "${YELLOW}OPENROUTER_API_KEY not set.${NC}"
     echo "Get a free key at: https://openrouter.ai/keys"
@@ -25,6 +27,27 @@ if [ -z "$OPENROUTER_API_KEY" ]; then
     echo "  - Pay only for tokens used"
     echo "  - No monthly fees"
     exit 0
+fi
+
+# Validate API key format (OpenRouter keys start with sk-or-v1-)
+if [[ "$OPENROUTER_API_KEY" != sk-or-v1-* ]]; then
+    echo -e "${YELLOW}WARNING: OPENROUTER_API_KEY doesn't start with 'sk-or-v1-'.${NC}"
+    echo "  Current value: ${OPENROUTER_API_KEY:0:15}..."
+    echo "  Get key at: https://openrouter.ai/keys"
+fi
+
+# Test API key with a lightweight request
+if command -v curl &>/dev/null; then
+    echo -e "${BLUE}  Testing API key...${NC}"
+    HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" \
+        -H "Authorization: Bearer $OPENROUTER_API_KEY" \
+        https://openrouter.ai/api/v1/auth/key 2>/dev/null || echo "000")
+    case "$HTTP_CODE" in
+        200) echo -e "${GREEN}  ✔ API key is valid${NC}" ;;
+        401) echo -e "${YELLOW}  ✘ API key is invalid (HTTP 401)${NC}" ;;
+        000) echo -e "${YELLOW}  ⚠ Could not reach OpenRouter (no network?)${NC}" ;;
+        *)   echo -e "${YELLOW}  ⚠ API returned HTTP $HTTP_CODE${NC}" ;;
+    esac
 fi
 
 echo -e "${BLUE}============================================${NC}"

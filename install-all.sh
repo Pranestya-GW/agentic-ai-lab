@@ -8,6 +8,7 @@ set -e
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'
+RED='\033[0;31m'
 NC='\033[0m'
 
 echo -e "${BLUE}============================================${NC}"
@@ -15,17 +16,88 @@ echo -e "${BLUE}  Agentic AI Lab — Full Install${NC}"
 echo -e "${BLUE}============================================${NC}"
 echo ""
 
-# --- Node.js check ---
-if ! command -v node &>/dev/null; then
-    echo -e "${YELLOW}Node.js not found. Installing via fnm...${NC}"
-    curl -fsSL https://fnm.vercel.app/install | bash
-    export PATH="$HOME/.local/share/fnm:$PATH"
-    eval "$(fnm env)"
-    fnm install 22
-    fnm use 22
+# ── Global prerequisite checks ───────────────────────────────────────
+# Run ALL checks upfront before installing anything
+
+echo -e "${BLUE}Checking system requirements...${NC}"
+
+PASS=0
+FAIL=0
+
+# Check OS
+if grep -qi microsoft /proc/version 2>/dev/null; then
+    echo -e "  ${GREEN}✔${NC} WSL2 environment detected"
+else
+    echo -e "  ${GREEN}✔${NC} Linux environment detected"
+fi
+((PASS++))
+
+# Check curl
+if command -v curl &>/dev/null; then
+    echo -e "  ${GREEN}✔${NC} curl is available"
+    ((PASS++))
+else
+    echo -e "  ${RED}✘${NC} curl is required. Install: sudo apt-get install -y curl"
+    ((FAIL++))
 fi
 
-echo -e "${GREEN}Node.js $(node --version) ready${NC}"
+# Check git
+if command -v git &>/dev/null; then
+    echo -e "  ${GREEN}✔${NC} git is available"
+    ((PASS++))
+else
+    echo -e "  ${YELLOW}⚠${NC} git not found — optional for most installs"
+fi
+
+# Check sudo
+if command -v sudo &>/dev/null; then
+    echo -e "  ${GREEN}✔${NC} sudo is available"
+    ((PASS++))
+else
+    echo -e "  ${YELLOW}⚠${NC} sudo not found — some installs may fail"
+fi
+
+# Node.js check (auto-install if missing)
+if ! command -v node &>/dev/null; then
+    echo -e "  ${YELLOW}ℹ${NC} Node.js not found. Will install via fnm..."
+    if command -v curl &>/dev/null; then
+        curl -fsSL https://fnm.vercel.app/install | bash
+        export PATH="$HOME/.local/share/fnm:$PATH"
+        eval "$(fnm env)"
+        fnm install 22
+        fnm use 22
+        echo -e "  ${GREEN}✔${NC} Node.js $(node --version) installed via fnm"
+    fi
+elif [ "$(node --version | sed 's/v//' | cut -d. -f1)" -lt 18 ]; then
+    echo -e "  ${YELLOW}⚠${NC} Node.js $(node --version) is old. Upgrade recommended (npm install -g n && n 22)"
+else
+    echo -e "  ${GREEN}✔${NC} Node.js $(node --version)"
+fi
+((PASS++))
+
+# Check Docker (needed for Open WebUI)
+if command -v docker &>/dev/null; then
+    echo -e "  ${GREEN}✔${NC} Docker is available"
+else
+    echo -e "  ${YELLOW}⚠${NC} Docker not found — Open WebUI install will be skipped"
+fi
+
+# Check RAM for local models
+TOTAL_RAM_GB=$(($(grep MemTotal /proc/meminfo 2>/dev/null | awk '{print $2}' || echo "0") / 1024 / 1024))
+if [ "$TOTAL_RAM_GB" -ge 8 ]; then
+    echo -e "  ${GREEN}✔${NC} RAM: ${TOTAL_RAM_GB}GB (sufficient for local models)"
+else
+    echo -e "  ${YELLOW}⚠${NC} RAM: ${TOTAL_RAM_GB}GB (8GB+ recommended for Qwen Coder)"
+fi
+
+# Summary
+echo ""
+if [ "$FAIL" -gt 0 ]; then
+    echo -e "${RED}${FAIL} prerequisite(s) failed. Fix them and re-run.${NC}"
+    exit 1
+fi
+echo -e "${GREEN}All prerequisites met! Starting installation...${NC}"
+echo ""
 
 # --- OpenRouter (unified API key) ---
 echo -e "\n${BLUE}[0/4] Configuring OpenRouter...${NC}"
