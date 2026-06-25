@@ -194,6 +194,20 @@ pi
 | `pi "query"` | One-shot query |
 | `pi --model claude-sonnet-4-20250514` | Use specific model |
 
+### Supercharge Pi with pi-setup
+
+Add extensions, themes, skills, a safety guard, and sync tooling. See the full guide:
+
+👉 **[`pi-dev/pi-setup.md`](pi-dev/pi-setup.md)**
+
+Quick install:
+
+```bash
+git clone https://github.com/abhinand5/pi-setup.git ~/pi-setup
+cd ~/pi-setup
+./install.sh --restore --copy-config
+```
+
 ---
 
 ## 2. Gemini CLI — Google AI in Terminal

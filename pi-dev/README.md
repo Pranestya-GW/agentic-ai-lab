@@ -73,6 +73,20 @@ export OPENAI_API_KEY="sk-..."
 export GEMINI_API_KEY="AIza..."
 ```
 
+## Supercharge with pi-setup
+
+Add custom extensions, themes (10+), skills, a safety guard, and sync tooling.
+
+👉 **[Full pi-setup tutorial →](pi-setup.md)**
+
+Quick install:
+
+```bash
+git clone https://github.com/abhinand5/pi-setup.git ~/pi-setup
+cd ~/pi-setup
+./install.sh --restore --copy-config
+```
+
 ## Resources
 
 - Docs: `pi --help`
