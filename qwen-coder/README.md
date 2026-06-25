@@ -71,3 +71,4 @@ curl http://localhost:11434/api/chat -d '{
 
 - Ollama: https://ollama.com
 - Qwen 2.5: https://github.com/QwenLM/Qwen2.5-Coder
+- 🔒 **[Safety setup →](safety-setup.md)** — system prompt and Modelfile safety

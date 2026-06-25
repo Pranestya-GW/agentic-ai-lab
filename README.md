@@ -14,6 +14,7 @@
 - [3. Claude Code — Anthropic in Terminal](#3-claude-code--anthropic-in-terminal)
 - [4. Qwen Coder — Local AI via Ollama](#4-qwen-coder--local-ai-via-ollama)
 - [Bonus: Open WebUI — Chat Interface](#bonus-open-webui--chat-interface)
+- [Safety Guides](#safety-guides)
 - [API Key Management](#api-key-management)
 - [Troubleshooting](#troubleshooting)
 
@@ -376,6 +377,35 @@ docker run -d \
 ```
 
 **Access:** http://localhost:3000
+
+---
+
+## Safety Guides
+
+Every AI agent can edit files and run commands. Here's how to make each one ask permission first:
+
+| Tool | Safety Guide | Best safety feature |
+|---|---|---|
+| **pi.dev** | [`pi-dev/pi-setup.md`](pi-dev/pi-setup.md) | `/safety` guard + `/filechanges` review |
+| **Gemini CLI** | [`gemini-cli/safety-setup.md`](gemini-cli/safety-setup.md) | `--approval-mode default` + `--sandbox` |
+| **Claude Code** | [`claude-code/safety-setup.md`](claude-code/safety-setup.md) | `--permission-mode default` + `.claude/settings.json` |
+| **Qwen Coder** | [`qwen-coder/safety-setup.md`](qwen-coder/safety-setup.md) | Custom Modelfile with safety rules |
+
+Quick summary:
+
+```bash
+# pi.dev  — install safety extension
+cd ~/pi-setup && ./install.sh --restore --copy-config
+
+# Gemini CLI  — always ask
+Gemini --approval-mode default
+
+# Claude Code  — always ask
+claude --permission-mode default
+
+# Qwen Coder  — permanent safety rules
+ollama create safety-qwen -f Modelfile.safety-qwen
+```
 
 ---
 

@@ -76,3 +76,4 @@ claude "The tests broke after the last commit. Find and fix the issue."
 
 - API keys: https://console.anthropic.com/
 - Docs: https://docs.anthropic.com/en/docs/claude-code
+- 🔒 **[Safety setup →](safety-setup.md)** — make Claude ask permission first

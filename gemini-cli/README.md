@@ -66,3 +66,4 @@ gemini --prompt "You are a PostgreSQL DBA expert" "Check this schema"
 
 - API keys: https://aistudio.google.com/apikey
 - Docs: https://ai.google.dev/gemini-api/docs
+- 🔒 **[Safety setup →](safety-setup.md)** — make Gemini ask permission first
