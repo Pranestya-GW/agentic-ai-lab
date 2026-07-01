@@ -77,6 +77,43 @@ pi --model claude-sonnet-4-20250514 "Review this codebase for security issues"
 
 ---
 
+## 9. Recommended Stack
+
+Set up the recommended provider, plugins, and skills for the best pi.dev experience:
+
+### Set DeepSeek as default provider
+
+```bash
+# DeepSeek API — cheapest, 500M tokens free on signup
+# Get key: https://platform.deepseek.com/api_keys
+export DEEPSEEK_API_KEY="sk-your-key-here"
+
+# pi.dev config
+echo 'export DEEPSEEK_API_KEY="sk-your-key-here"' >> ~/.bashrc
+source ~/.bashrc
+```
+
+- **Docs:** https://api-docs.deepseek.com/
+- **API Base:** https://api.deepseek.com/v1
+- **Default model:** `deepseek-v4-flash`
+
+### Install recommended plugins
+
+```bash
+pi plugins install context-mode          # hemat context window
+pi plugins install pi-deepseek-search    # biar DeepSeek bisa web search
+pi plugins install pi-codex-goal         # goal mode
+pi plugins install @juicesharp/rpiv-ask-user-question  # interactive ask
+```
+
+### Install the grilling skill
+
+```bash
+pi skills install mattpocock/skills/grilling
+```
+
+---
+
 ## Resources
 
 - Docs: `pi --help`

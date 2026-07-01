@@ -103,9 +103,9 @@ echo ""
 echo -e "\n${BLUE}[0/4] Configuring OpenRouter...${NC}"
 bash "$(dirname "$0")/install-openrouter.sh"
 
-# --- pi.dev ---
+# --- pi.dev (binary + recommended stack menu) ---
 echo -e "\n${BLUE}[1/4] Installing pi.dev...${NC}"
-bash "$(dirname "$0")/install-pi-dev.sh" 2>/dev/null || {
+bash "$(dirname "$0")/install-pi-dev.sh" || {
     echo -e "${YELLOW}  pi.dev install skipped (check install-pi-dev.sh)${NC}"
 }
 
@@ -138,9 +138,14 @@ echo -e "${GREEN}============================================${NC}"
 echo ""
 echo "Installed tools:"
 echo "  pi.dev:         run 'pi'"
+echo "                  (stack plugins/skills selected during install)"
 echo "  Gemini CLI:     run 'gemini'"
 echo "  Claude Code:    run 'claude'"
 echo "  Qwen Coder:     run 'ollama run qwen2.5-coder:7b'"
+echo ""
+echo "Full pi.dev stack docs:"
+echo "  pi-dev/pi-setup.md    — what each plugin does + how to use"
+echo "  AGENTS.md             — decision guide (pick your stack)"
 echo ""
 echo "Optional: ./install-open-webui.sh (Docker required)"
 echo ""

@@ -77,6 +77,22 @@ export GEMINI_API_KEY="AIza..."
 
 Add custom extensions, themes (10+), skills, a safety guard, and sync tooling.
 
+### Install recommended plugins
+
+```bash
+# Plugins from the recommended stack
+pi plugins install context-mode          # hemat context window
+pi plugins install pi-deepseek-search    # DeepSeek web search
+pi plugins install pi-codex-goal         # goal mode
+pi plugins install @juicesharp/rpiv-ask-user-question  # interactive ask
+```
+
+### Install the grilling skill
+
+```bash
+pi skills install mattpocock/skills/grilling
+```
+
 👉 **[Full pi-setup tutorial →](pi-setup.md)**
 
 Quick install:
@@ -86,6 +102,28 @@ git clone https://github.com/abhinand5/pi-setup.git ~/pi-setup
 cd ~/pi-setup
 ./install.sh --restore --copy-config
 ```
+
+## Recommended Stack
+
+| Component | Value |
+|-----------|-------|
+| **Agent** | pi.dev |
+| **Docs** | https://api-docs.deepseek.com/ |
+| **API Base** | https://api.deepseek.com/v1 |
+| **Default model** | `deepseek-v4-flash` |
+
+### Recommended Skills
+
+- **Grilling** — stress-test your plans: https://www.skills.sh/mattpocock/skills/grilling
+
+### Recommended Pi Plugins
+
+| Plugin | What it does |
+|--------|-------------|
+| [context-mode](https://pi.dev/packages/context-mode) | Hemat context window |
+| [pi-deepseek-search](https://pi.dev/packages/pi-deepseek-search) | Biar DeepSeek bisa web search |
+| [pi-codex-goal](https://pi.dev/packages/pi-codex-goal) | Goal mode |
+| [@juicesharp/rpiv-ask-user-question](https://pi.dev/packages/@juicesharp/rpiv-ask-user-question) | Interactive ask-user-question |
 
 ## Resources
 
